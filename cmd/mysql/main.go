@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"os"
 	"strconv"
 
@@ -37,7 +38,7 @@ func main() {
 	err = internal.Run(db, internal.Options{
 		PackageName: internal.Flag.PackageName,
 		Output:      internal.Flag.Output,
-		Query:       "SELECT TABLE_NAME AS table_name, COLUMN_NAME AS column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE();",
+		Query:       database.QueryForMySQL,
 	})
 	if err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err.Error())

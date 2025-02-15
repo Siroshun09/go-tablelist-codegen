@@ -9,6 +9,10 @@ import (
 	"github.com/Siroshun09/serrors"
 )
 
+const (
+	QueryForMySQL = "SELECT TABLE_NAME AS table_name, COLUMN_NAME AS column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE();"
+)
+
 // DB is an interface to execute queries.
 type DB interface {
 	// Query executes the given query with args.
