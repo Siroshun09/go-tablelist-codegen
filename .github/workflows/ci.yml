@@ -17,4 +17,4 @@ jobs:
   lint:
     uses: Siroshun09/gh-actions-workflows/.github/workflows/go-lint.yml@v1
     with:
-      golangci-lint-version: 1.63.4
+      golangci-lint-version: v1.64.5
