@@ -10,7 +10,6 @@ import (
 	"github.com/Siroshun09/go-tablelist-codegen/internal"
 	"github.com/Siroshun09/serrors"
 	"github.com/go-sql-driver/mysql"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
