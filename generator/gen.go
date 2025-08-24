@@ -2,10 +2,10 @@ package generator
 
 import (
 	_ "embed"
-	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"io"
 	"text/template"
 
+	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"github.com/Siroshun09/serrors"
 )
 

@@ -2,12 +2,12 @@ package internal
 
 import (
 	"errors"
-	"github.com/Siroshun09/go-tablelist-codegen/database"
-	"github.com/Siroshun09/go-tablelist-codegen/generator"
 	"io"
 	"os"
 	"path/filepath"
 
+	"github.com/Siroshun09/go-tablelist-codegen/database"
+	"github.com/Siroshun09/go-tablelist-codegen/generator"
 	"github.com/Siroshun09/serrors"
 )
 

@@ -3,10 +3,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"os"
 	"strconv"
 
+	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"github.com/Siroshun09/go-tablelist-codegen/internal"
 	"github.com/Siroshun09/serrors"
 	"github.com/go-sql-driver/mysql"
