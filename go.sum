@@ -4,5 +4,7 @@ github.com/Siroshun09/serrors v1.2.1 h1:04eKsvTbRLB8utJXYul6cM/tWnuGihFOwyVMSRvm
 github.com/Siroshun09/serrors v1.2.1/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
 github.com/Siroshun09/serrors v1.3.0 h1:vsSKEzAlG07dXui5+wfPTCQoIU2GEOiS75RQxTL69EQ=
 github.com/Siroshun09/serrors v1.3.0/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
+github.com/Siroshun09/serrors v1.4.0 h1:YhQGvqAZI6f8Xr27Ddwwdxn3GVHBrd1j03ziAq6WZfU=
+github.com/Siroshun09/serrors v1.4.0/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
 github.com/go-sql-driver/mysql v1.9.3 h1:U/N249h2WzJ3Ukj8SowVFjdtZKfu9vlLZxjPXV1aweo=
 github.com/go-sql-driver/mysql v1.9.3/go.mod h1:qn46aNg1333BRMNU69Lq93t8du/dwxI64Gl8i5p1WMU=
