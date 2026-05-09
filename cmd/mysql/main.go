@@ -8,7 +8,7 @@ import (
 
 	"github.com/Siroshun09/go-tablelist-codegen/database"
 	"github.com/Siroshun09/go-tablelist-codegen/internal"
-	"github.com/Siroshun09/serrors"
+	"github.com/Siroshun09/serrors/v2"
 	"github.com/go-sql-driver/mysql"
 )
 

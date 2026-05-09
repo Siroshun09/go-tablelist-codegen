@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/Siroshun09/go-tablelist-codegen/database"
-	"github.com/Siroshun09/serrors"
+	"github.com/Siroshun09/serrors/v2"
 )
 
 //go:embed gen.go.tmpl
@@ -16,11 +16,11 @@ var codeTmpl string
 func GenerateCode(w io.Writer, param TemplateParam) error {
 	tmpl, err := template.New("tablelist").Parse(codeTmpl)
 	if err != nil {
-		return serrors.WithStackTrace(err)
+		return serrors.Wrap(err)
 	}
 
 	if err := tmpl.Execute(w, param); err != nil {
-		return serrors.WithStackTrace(err)
+		return serrors.Wrap(err)
 	}
 
 	return nil

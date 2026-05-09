@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/Siroshun09/serrors"
+	"github.com/Siroshun09/serrors/v2"
 )
 
 const (
@@ -25,13 +25,13 @@ type DB interface {
 func GetTables(db DB, query string) (tables []Table, returnErr error) {
 	rows, err := db.Query(query)
 	if err != nil {
-		return nil, serrors.WithStackTrace(err)
+		return nil, serrors.Wrap(err)
 	}
 
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			returnErr = serrors.WithStackTrace(errors.Join(returnErr, err))
+			returnErr = serrors.Wrap(errors.Join(returnErr, err))
 		}
 	}(rows)
 
@@ -45,7 +45,7 @@ func GetTables(db DB, query string) (tables []Table, returnErr error) {
 		var col column
 		err = rows.Scan(&col.TableName, &col.ColumnName)
 		if err != nil {
-			return nil, serrors.WithStackTrace(err)
+			return nil, serrors.Wrap(err)
 		}
 		columns = append(columns, col)
 	}
