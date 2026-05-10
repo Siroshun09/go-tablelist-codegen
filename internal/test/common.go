@@ -8,7 +8,7 @@ import (
 	"github.com/Siroshun09/serrors/v2"
 )
 
-//go:embed expected/output.go
+//go:embed expected/output.gen.go
 var expectedOutput string
 
 // getProjectRoot searches for the project root directory containing go.mod
