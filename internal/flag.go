@@ -12,8 +12,9 @@ var Flag = struct {
 		Database string
 		SSLMode  string
 	}
-	Output string
-	Debug  bool
+	SchemaFile string
+	Output     string
+	Debug      bool
 }{}
 
 func ParseFlags() {
@@ -24,6 +25,7 @@ func ParseFlags() {
 	flag.StringVar(&Flag.DBConnInfo.Password, "password", "", "password")
 	flag.StringVar(&Flag.DBConnInfo.Database, "database", "", "database")
 	flag.StringVar(&Flag.DBConnInfo.SSLMode, "sslmode", "disable", "sslmode")
+	flag.StringVar(&Flag.SchemaFile, "schema-file", "", "schema-file")
 	flag.StringVar(&Flag.Output, "output", "", "output")
 	flag.BoolVar(&Flag.Debug, "debug", false, "debug")
 
