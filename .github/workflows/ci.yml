@@ -4,16 +4,28 @@ permissions:
   checks: write
 
 jobs:
-  test-1_25:
+  define-go-versions:
+    name: Define Go Versions
+    runs-on: ubuntu-latest
+    outputs:
+      go-versions: ${{ steps.set.outputs.go-versions }}
+    steps:
+      - id: define
+        run: echo 'go-versions=[ "1.25", "1.26" ]' >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: define-go-versions
+    name: Test
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ${{ fromJson(needs.define-go-versions.outputs.go-versions) }}
     uses: Siroshun09/gh-actions-workflows/.github/workflows/go-test.yml@v1
     with:
+      check-name: Test Report (Go ${{ matrix.go-version }})
       upload-results: true
-      go-version: 1.25
-  test-1_26:
-    uses: Siroshun09/gh-actions-workflows/.github/workflows/go-test.yml@v1
-    with:
-      upload-results: true
-      go-version: 1.26
+      go-version: ${{ matrix.go-version }}
+
   lint:
     uses: Siroshun09/gh-actions-workflows/.github/workflows/go-lint.yml@v1
     with:
