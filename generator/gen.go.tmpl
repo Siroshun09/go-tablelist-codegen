@@ -3,14 +3,14 @@
 package {{ .PackageName }}
 {{ range .Tables }}
 var {{ .FieldName }} = struct {
-    TableName string
-    {{- range .Columns }}
-    {{ .FieldName }} string
-    {{- end }}
+	TableName string
+	{{- range .Columns }}
+	{{ .FieldName }} string
+	{{- end }}
 }{
-    TableName: "{{ .TableName }}",
-    {{- range .Columns }}
-    {{ .FieldName }}: "{{ .ColumnName }}",
-    {{- end }}
+	TableName: "{{ .TableName }}",
+	{{- range .Columns }}
+	{{ .FieldName }}: "{{ .ColumnName }}",
+	{{- end }}
 }
 {{ end -}}
