@@ -1,7 +1,6 @@
 package test
 
 import (
-	_ "embed"
 	"os/exec"
 	"strings"
 	"testing"
