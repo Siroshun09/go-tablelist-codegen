@@ -23,6 +23,12 @@ go get github.com/Siroshun09/go-tablelist-codegen
 - `--package-name <package name>`
 - `--output <output filepath>` (Optional)
   - If not specified, the codegen prints the generated code to stdout
+- `--debug <true/false>` (Optional)
+  - Prints stacktrace on error
+  - Default: `false`
+
+### For MySQL
+
 - `--host <host>`
 - `--port <port>`
 - `--user <username>`
@@ -30,12 +36,13 @@ go get github.com/Siroshun09/go-tablelist-codegen
 - `--database <database name>`
 - `--sslmode <sslmode>` (Optional)
   - Default: `disable`
-- `--debug <true/false>` (Optional)
-  - Prints stacktrace on error
-  - Default: `false`
+
+### For SQLite
+
+- `--schema-file <schema filepath>`
 
 ## License
 
 This project is under the Apache License version 2.0. Please see [LICENSE](LICENSE) for more info.
 
-Copyright © 2025, Siroshun09
+Copyright © 2025-2026, Siroshun09
