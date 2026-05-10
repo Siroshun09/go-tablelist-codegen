@@ -1,40 +1,21 @@
 package test
 
 import (
-	"os/exec"
-	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSQLite(t *testing.T) {
 	root, err := getProjectRoot()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	args := []string{
+	run(
+		t, root,
 		"run",
 		"./cmd/sqlite",
 		"-package-name", "tablelist",
 		"-schema-file", "internal/test/schema_sqlite.sql",
 		"-debug",
-	}
-
-	stdout := strings.Builder{}
-	stderr := strings.Builder{}
-
-	cmd := exec.CommandContext(t.Context(), "go", args...)
-	cmd.Dir = root
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	if !assert.NoError(t, cmd.Run()) {
-		t.Log(stderr.String())
-		return
-	}
-
-	assert.Equal(t, expectedOutput, stdout.String())
-	assert.Empty(t, stderr.String())
+	)
 }

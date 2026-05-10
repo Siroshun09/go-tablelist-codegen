@@ -4,13 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -39,7 +36,8 @@ func TestPostgreSQL(t *testing.T) {
 	_, err = db.ExecContext(t.Context(), string(schemaSQL))
 	require.NoError(t, err)
 
-	args := []string{
+	run(
+		t, root,
 		"run",
 		"./cmd/postgresql",
 		"-package-name", "tablelist",
@@ -49,21 +47,5 @@ func TestPostgreSQL(t *testing.T) {
 		"-password", password,
 		"-database", database,
 		"-debug",
-	}
-
-	stdout := strings.Builder{}
-	stderr := strings.Builder{}
-
-	cmd := exec.CommandContext(t.Context(), "go", args...)
-	cmd.Dir = root
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	if !assert.NoError(t, cmd.Run()) {
-		t.Log(stderr.String())
-		return
-	}
-
-	assert.Equal(t, expectedOutput, stdout.String())
-	assert.Empty(t, stderr.String())
+	)
 }
