@@ -17,7 +17,7 @@ func TestSQLite(t *testing.T) {
 	args := []string{
 		"run",
 		"./cmd/sqlite",
-		"-package-name", "sqlitedb",
+		"-package-name", "tablelist",
 		"-schema-file", "internal/test/schema_sqlite.sql",
 		"-debug",
 	}
