@@ -66,6 +66,46 @@ jobs:
           MYSQL_PASSWORD: tablelist_pw
           MYSQL_DATABASE: tablelist_db
 
+  test-postgresql:
+    needs: define-go-versions
+    name: Test for PostgreSQL
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ${{ fromJson(needs.define-go-versions.outputs.go-versions) }}
+    services:
+      postgres:
+        image: postgres:18.3@sha256:7e32e9833a6fb1c92c32552794cb6ed569d51b445a54907d35fc112ef39684db
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: tablelist_db
+          POSTGRES_PASSWORD: tablelist_pw
+        options: >-
+          --health-cmd "pg_isready"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: Siroshun09/gh-actions-workflows/.github/actions/checkout@v1
+      - uses: Siroshun09/gh-actions-workflows/.github/actions/go-setup@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+      - uses: Siroshun09/gh-actions-workflows/.github/actions/go-test@v1
+        with:
+          additional-arguments: "-run ^TestPostgreSQL$"
+          check-name: Test Report for PostgreSQL (Go ${{ matrix.go-version }})
+          upload-results: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          ENABLE_POSTGRESQL_TEST: true
+          POSTGRESQL_HOST: 127.0.0.1
+          POSTGRESQL_PORT: 5432
+          POSTGRESQL_USER: postgres
+          POSTGRESQL_PASSWORD: tablelist_pw
+          POSTGRESQL_DATABASE: tablelist_db
+
   lint:
     uses: Siroshun09/gh-actions-workflows/.github/workflows/go-lint.yml@v1
     with:
