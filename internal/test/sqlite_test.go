@@ -18,7 +18,7 @@ func TestSQLite(t *testing.T) {
 		"run",
 		"./cmd/sqlite",
 		"-package-name", "sqlitedb",
-		"-schema-file", "test/schema_sqlite.sql",
+		"-schema-file", "internal/test/schema_sqlite.sql",
 		"-debug",
 	}
 
