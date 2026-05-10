@@ -8,7 +8,7 @@ jobs:
     name: Define Go Versions
     runs-on: ubuntu-latest
     outputs:
-      go-versions: ${{ steps.set.outputs.go-versions }}
+      go-versions: ${{ steps.define.outputs.go-versions }}
     steps:
       - id: define
         run: echo 'go-versions=[ "1.25", "1.26" ]' >> "$GITHUB_OUTPUT"
