@@ -10,7 +10,9 @@ A Go library to generate structs that define table and column names in the datab
 
 ### CLI
 
-- Run `go run github.com/Siroshun09/go-tablelist-codegen/cmd/mysql@<version> <flags>`
+- MySQL: `go run github.com/Siroshun09/go-tablelist-codegen/cmd/mysql@<version> <flags>`
+- PostgreSQL: `go run github.com/Siroshun09/go-tablelist-codegen/cmd/postgresql@<version> <flags>`
+- SQLite: `go run github.com/Siroshun09/go-tablelist-codegen/cmd/sqlite@<version> <flags>`
 
 ### Library
 
@@ -27,7 +29,7 @@ go get github.com/Siroshun09/go-tablelist-codegen
   - Prints stacktrace on error
   - Default: `false`
 
-### For MySQL
+### For MySQL and PostgreSQL
 
 - `--host <host>`
 - `--port <port>`
