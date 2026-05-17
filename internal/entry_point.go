@@ -2,6 +2,7 @@ package internal
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"os"
@@ -21,7 +22,7 @@ type Options struct {
 func Run(db database.DB, opts Options) (returnErr error) {
 	tables, err := database.GetTables(db, opts.Query)
 	if err != nil {
-		return serrors.WithMsg(err, "failed to get table list")
+		return serrors.Wrap(fmt.Errorf("failed to get table list: %w", err))
 	}
 
 	var w io.Writer
@@ -29,18 +30,21 @@ func Run(db database.DB, opts Options) (returnErr error) {
 		dir := filepath.Dir(opts.Output)
 		err := os.MkdirAll(dir, 0o750)
 		if err != nil {
-			return serrors.WithMsg(err, "failed to create output directory", slog.String("dir", dir))
+			return serrors.Wrap(fmt.Errorf("failed to create output directory: %w", err), slog.String("dir", dir))
 		}
 
 		file, err := os.OpenFile(opts.Output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o600)
 		if err != nil {
-			return serrors.WithMsg(err, "failed to open output file", slog.String("file", opts.Output))
+			return serrors.Wrap(fmt.Errorf("failed to open output file: %w", err), slog.String("file", opts.Output))
 		}
 
 		defer func(file *os.File) {
 			err := file.Close()
 			if err != nil {
-				returnErr = errors.Join(returnErr, serrors.WithMsg(err, "failed to close output file", slog.String("file", opts.Output)))
+				returnErr = errors.Join(returnErr, serrors.Wrap(
+					fmt.Errorf("failed to close output file: %w", err),
+					slog.String("file", opts.Output),
+				))
 			}
 		}(file)
 
@@ -54,7 +58,7 @@ func Run(db database.DB, opts Options) (returnErr error) {
 		Tables:      tables,
 	})
 	if err != nil {
-		return serrors.WithMsg(err, "failed to generate code")
+		return serrors.Wrap(fmt.Errorf("failed to generate code: %w", err))
 	}
 
 	return nil
