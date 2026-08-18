@@ -16,19 +16,6 @@ jobs:
   test:
     needs: define-go-versions
     name: Test
-    strategy:
-      fail-fast: false
-      matrix:
-        go-version: ${{ fromJson(needs.define-go-versions.outputs.go-versions) }}
-    uses: Siroshun09/gh-actions-workflows/.github/workflows/go-test.yml@v1
-    with:
-      check-name: Test Report (Go ${{ matrix.go-version }})
-      upload-results: true
-      go-version: ${{ matrix.go-version }}
-
-  test-mysql:
-    needs: define-go-versions
-    name: Test for MySQL
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -44,9 +31,21 @@ jobs:
           MYSQL_ROOT_PASSWORD: tablelist_pw
         options: >-
           --health-cmd "healthcheck.sh --connect --innodb_initialized"
-          --health-interval 10s
+          --health-interval 1s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 10
+      postgres:
+        image: postgres:18.4@sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: tablelist_db
+          POSTGRES_PASSWORD: tablelist_pw
+        options: >-
+          --health-cmd "pg_isready -U postgres -d tablelist_db"
+          --health-interval 1s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: Siroshun09/gh-actions-workflows/.github/actions/checkout@v1
       - uses: Siroshun09/gh-actions-workflows/.github/actions/go-setup@v1
@@ -54,8 +53,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - uses: Siroshun09/gh-actions-workflows/.github/actions/go-test@v1
         with:
-          additional-arguments: "-run ^TestMySQL$"
-          check-name: Test Report for MySQL (Go ${{ matrix.go-version }})
+          check-name: Test Report (Go ${{ matrix.go-version }})
           upload-results: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
@@ -65,40 +63,6 @@ jobs:
           MYSQL_USER: root
           MYSQL_PASSWORD: tablelist_pw
           MYSQL_DATABASE: tablelist_db
-
-  test-postgresql:
-    needs: define-go-versions
-    name: Test for PostgreSQL
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        go-version: ${{ fromJson(needs.define-go-versions.outputs.go-versions) }}
-    services:
-      postgres:
-        image: postgres:18.4@sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_DB: tablelist_db
-          POSTGRES_PASSWORD: tablelist_pw
-        options: >-
-          --health-cmd "pg_isready"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: Siroshun09/gh-actions-workflows/.github/actions/checkout@v1
-      - uses: Siroshun09/gh-actions-workflows/.github/actions/go-setup@v1
-        with:
-          go-version: ${{ matrix.go-version }}
-      - uses: Siroshun09/gh-actions-workflows/.github/actions/go-test@v1
-        with:
-          additional-arguments: "-run ^TestPostgreSQL$"
-          check-name: Test Report for PostgreSQL (Go ${{ matrix.go-version }})
-          upload-results: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        env:
           ENABLE_POSTGRESQL_TEST: true
           POSTGRESQL_HOST: 127.0.0.1
           POSTGRESQL_PORT: 5432
