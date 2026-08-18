@@ -33,7 +33,7 @@ jobs:
           --health-cmd "healthcheck.sh --connect --innodb_initialized"
           --health-interval 1s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 10
       postgres:
         image: postgres:18.4@sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636
         ports:
@@ -42,10 +42,10 @@ jobs:
           POSTGRES_DB: tablelist_db
           POSTGRES_PASSWORD: tablelist_pw
         options: >-
-          --health-cmd "pg_isready"
+          --health-cmd "pg_isready -U postgres -d tablelist_db"
           --health-interval 1s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 10
     steps:
       - uses: Siroshun09/gh-actions-workflows/.github/actions/checkout@v1
       - uses: Siroshun09/gh-actions-workflows/.github/actions/go-setup@v1
