@@ -31,7 +31,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: tablelist_pw
         options: >-
           --health-cmd "healthcheck.sh --connect --innodb_initialized"
-          --health-interval 10s
+          --health-interval 1s
           --health-timeout 5s
           --health-retries 5
       postgres:
@@ -43,7 +43,7 @@ jobs:
           POSTGRES_PASSWORD: tablelist_pw
         options: >-
           --health-cmd "pg_isready"
-          --health-interval 10s
+          --health-interval 1s
           --health-timeout 5s
           --health-retries 5
     steps:
