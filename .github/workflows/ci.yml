@@ -33,7 +33,7 @@ jobs:
           --health-cmd "healthcheck.sh --connect --innodb_initialized"
           --health-interval 1s
           --health-timeout 5s
-          --health-retries 10
+          --health-retries 30
       postgres:
         image: postgres:18.4@sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636
         ports:
