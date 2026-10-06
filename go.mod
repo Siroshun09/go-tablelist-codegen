@@ -1,6 +1,6 @@
 module github.com/Siroshun09/go-tablelist-codegen
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/Siroshun09/serrors/v2 v2.0.0
