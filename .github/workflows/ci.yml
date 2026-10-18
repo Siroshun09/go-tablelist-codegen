@@ -23,7 +23,7 @@ jobs:
         go-version: ${{ fromJson(needs.define-go-versions.outputs.go-versions) }}
     services:
       mariadb:
-        image: mariadb:13.0.2@sha256:f1bba652ba57bea3099ca2fe1af692af537c27d96e0bcde39dce29e2ba1ec4f3
+        image: mariadb:13.0.2@sha256:0e4bb0f339feba125d1154fbacd36c16ec8518f52e44e1f82ecec7d6771caf39
         ports:
           - "3306:3306"
         env:
