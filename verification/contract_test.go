@@ -23,7 +23,7 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-var readFailure = errors.New("injected rows.Next failure")
+var errReadFailure = errors.New("injected rows.Next failure")
 
 type connector struct{ fail bool }
 type connection struct{ fail bool }
@@ -51,7 +51,7 @@ func (r *testRows) Next(dest []driver.Value) error {
 		return nil
 	}
 	if r.fail {
-		return readFailure
+		return errReadFailure
 	}
 	return io.EOF
 }
@@ -116,7 +116,7 @@ func TestNormalEOF(t *testing.T) {
 
 func TestReadError(t *testing.T) {
 	tables, err := database.GetTables(faultDB(t, true), "test")
-	if !errors.Is(err, readFailure) {
+	if !errors.Is(err, errReadFailure) {
 		t.Fatalf("must propagate iteration error; got err=%v, partial tables=%#v", err, tables)
 	}
 }
@@ -132,7 +132,7 @@ func TestOutputPreservedOnReadError(t *testing.T) {
 	if readErr != nil {
 		t.Fatal(readErr)
 	}
-	if !errors.Is(err, readFailure) || !bytes.Equal(before, after) {
+	if !errors.Is(err, errReadFailure) || !bytes.Equal(before, after) {
 		t.Fatalf("failed query must not overwrite output: err=%v, preserved=%v, output=%s", err, bytes.Equal(before, after), after)
 	}
 }
