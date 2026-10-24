@@ -8,9 +8,9 @@ var {{ .FieldName }} = struct {
 	{{ .FieldName }} string
 	{{- end }}
 }{
-	TableName: "{{ .TableName }}",
+	TableName: {{ printf "%q" .TableName }},
 	{{- range .Columns }}
-	{{ .FieldName }}: "{{ .ColumnName }}",
+	{{ .FieldName }}: {{ printf "%q" .ColumnName }},
 	{{- end }}
 }
 {{ end -}}

@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"io"
@@ -23,6 +24,14 @@ func Run(db database.DB, opts Options) (returnErr error) {
 	tables, err := database.GetTables(db, opts.Query)
 	if err != nil {
 		return serrors.Wrap(fmt.Errorf("failed to get table list: %w", err))
+	}
+
+	var code bytes.Buffer
+	if err := generator.GenerateCode(&code, generator.TemplateParam{
+		PackageName: opts.PackageName,
+		Tables:      tables,
+	}); err != nil {
+		return serrors.Wrap(fmt.Errorf("failed to generate code: %w", err))
 	}
 
 	var w io.Writer
@@ -53,12 +62,9 @@ func Run(db database.DB, opts Options) (returnErr error) {
 		w = os.Stdout
 	}
 
-	err = generator.GenerateCode(w, generator.TemplateParam{
-		PackageName: opts.PackageName,
-		Tables:      tables,
-	})
+	_, err = io.Copy(w, &code)
 	if err != nil {
-		return serrors.Wrap(fmt.Errorf("failed to generate code: %w", err))
+		return serrors.Wrap(fmt.Errorf("failed to write code: %w", err))
 	}
 
 	return nil

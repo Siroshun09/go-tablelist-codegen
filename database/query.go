@@ -51,6 +51,9 @@ func GetTables(db DB, query string) (tables []Table, returnErr error) {
 		}
 		columns = append(columns, col)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, serrors.Wrap(err)
+	}
 
 	byTableName := make(map[string][]column)
 	for _, col := range columns {
